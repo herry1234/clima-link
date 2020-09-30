@@ -16,7 +16,7 @@ services:
     networks: 
       - clim-network
   clima-storage:
-    image: 'pkalkman/clima-storage:0.5.6'
+    image: 'herry1234/clima-storage:0.5.7'
     container_name: 'clima-storage'
     environment:
       - MQTT_BROKER_HOST=clima-broker
@@ -30,7 +30,7 @@ services:
     networks: 
       - clim-network
   clima-broker:
-    image: 'pkalkman/clima-broker:0.5.6'
+    image: 'herry1234/clima-broker:0.5.7'
     container_name: 'clima-broker'
     environment:
       - MQTT_BROKER_PORT=8883
@@ -39,7 +39,7 @@ services:
     networks:
       - clim-network
   clima-measure: 
-    image: 'pkalkman/clima-measure:0.5.6'
+    image: 'herry1234/clima-measure:0.5.7'
     container_name: 'clima-measure'
     environment:
       - MQTT_BROKER_HOST=clima-broker

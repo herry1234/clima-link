@@ -2,6 +2,7 @@
 VERSION="0.5.7"
 ARCH="arm32v7"
 APP="clima-measure"
-docker buildx build -f ./Dockerfile-$APP-$ARCH -t $APP:$VERSION . --load
-docker tag $APP:$VERSION pkalkman/$APP:$VERSION
-docker push pkalkman/$APP:$VERSION
+docker buildx build --file ./Dockerfile-$APP-$ARCH -t $APP:$VERSION . --load
+#docker buildx build -f ./Dockerfile-$APP-$ARCH -t $APP:$VERSION . --load
+docker tag $APP:$VERSION herry1234/$APP:$VERSION
+docker push herry1234/$APP:$VERSION

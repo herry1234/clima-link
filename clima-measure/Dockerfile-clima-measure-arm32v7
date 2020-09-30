@@ -1,6 +1,9 @@
 FROM arm32v7/node:12-alpine
 
 EXPOSE 8181
+# RUN apk add --no-cache --virtual .gyp python make g++ \
+#    && npm install [ your npm dependencies here ] \
+#    && apk del .gyp
 
 # Create the work dir and set permissions as WORKDIR set the permissions as root
 RUN mkdir /home/node/app/ && chown -R node:node /home/node/app
