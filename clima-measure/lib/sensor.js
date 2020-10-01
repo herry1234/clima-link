@@ -36,7 +36,7 @@ sensor.read = function read(cb) {
   } else {
     // Generate a fake temperature for testing
     const temperature = Math.floor(Math.random() * 20);
-    cb(null, temperature);
+    cb(null, temperature,20);
   }
 };
 

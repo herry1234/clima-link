@@ -18,6 +18,7 @@ storage.connect = function connect(cb) {
         measurement: 'temperature',
         fields: {
           temperature: Influx.FieldType.FLOAT,
+          humidity: Influx.FieldType.FLOAT,
         },
         tags: ['host'],
       },
@@ -33,14 +34,15 @@ storage.connect = function connect(cb) {
 };
 
 storage.save = function save(message, cb) {
-  log.info(`Storing message: ${message.temperature} ${message.timeStamp}`);
+  log.info(`Storing message: ${message.temperature} ${message.timeStamp} ${message.humidity}`);
   storage.influx.writePoints([
     {
       measurement: 'temperature',
       fields: {
         temperature: message.temperature,
+	humidity: message.humidity,
       },
-      timestamp: message.timeStamp,
+      //timestamp: message.timeStamp,
     },
   ]).then(cb);
 };

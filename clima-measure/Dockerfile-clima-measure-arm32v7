@@ -1,7 +1,10 @@
 FROM arm32v7/node:12-alpine
+RUN addgroup -S -g 997 gpio
+#RUN usermod -l node -G gpio
+RUN adduser node gpio
 
 EXPOSE 8181
-# RUN apk add --no-cache --virtual .gyp python make g++ \
+RUN apk add --no-cache --virtual .gyp python make g++ 
 #    && npm install [ your npm dependencies here ] \
 #    && apk del .gyp
 
@@ -16,6 +19,7 @@ COPY --chown=node:node package*.json ./
 USER node
 
 RUN npm install --only=prod && npm cache clean --force --loglevel=error
+#COPY --chown=node:node node_modules ./node_modules/
 
 # Copy app source
 COPY --chown=node:node index.js .

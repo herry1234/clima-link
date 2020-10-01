@@ -13,8 +13,6 @@ services:
       - ./data:/var/lib/influx.db
     ports:
       - '8086:8086'
-    networks: 
-      - clim-network
   clima-storage:
     image: 'herry1234/clima-storage:0.5.7'
     container_name: 'clima-storage'
@@ -27,8 +25,6 @@ services:
       - DATABASE_NAME=climalink
       - DATABASE_USER=climalink
       - DATABASE_PASSWORD=secretuser
-    networks: 
-      - clim-network
   clima-broker:
     image: 'herry1234/clima-broker:0.5.7'
     container_name: 'clima-broker'
@@ -36,10 +32,10 @@ services:
       - MQTT_BROKER_PORT=8883
       - MQTT_USERNAME=brokerusername
       - MQTT_PASSWORD=brokerpassword
-    networks:
-      - clim-network
+    ports:
+      - '8883:8883'
   clima-measure: 
-    image: 'herry1234/clima-measure:0.5.7'
+    image: 'herry1234/clima-measure:0.5.8'
     container_name: 'clima-measure'
     environment:
       - MQTT_BROKER_HOST=clima-broker
@@ -47,7 +43,4 @@ services:
       - MQTT_USERNAME=brokerusername
       - MQTT_PASSWORD=brokerpassword
       - NODE_ENV=production
-    networks: 
-      - clim-network
-networks:
-    clim-network:
+    privileged: true

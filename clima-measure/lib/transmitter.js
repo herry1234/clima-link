@@ -33,9 +33,10 @@ transmitter.connect = function connect(cb) {
   });
 };
 
-transmitter.send = function send(temperature, cb) {
+transmitter.send = function send(temperature,humidity,cb) {
   const message = {
     temperature,
+    humidity,
     timeStamp: moment().unix(),
   };
 

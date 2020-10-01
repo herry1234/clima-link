@@ -15,7 +15,7 @@ const transmitter = require('./lib/transmitter');
 const app = {};
 
 app.init = function init() {
-  log.info('Started climate measurement, start reading sensor data');
+  log.info('Start reading sensor data');
   transmitter.connect(() => {
     app.intervalTimer = setTimeout(() => {
       app.measureAndSend();
@@ -24,9 +24,9 @@ app.init = function init() {
 };
 
 app.measureAndSend = function measureAndSend() {
-  sensor.read((senorErr, measurement) => {
+  sensor.read((senorErr, temp, humidity) => {
     if (!senorErr) {
-      transmitter.send(measurement, (transmitErr) => {
+      transmitter.send(temp, humidity, (transmitErr) => {
         if (transmitErr) {
           log.error(`An error occurred while publishing the measurement. Err: ${transmitErr}`);
         } else {
