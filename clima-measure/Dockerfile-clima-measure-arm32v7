@@ -4,7 +4,7 @@ RUN addgroup -S -g 997 gpio
 RUN adduser node gpio
 
 EXPOSE 8181
-RUN apk add --no-cache --virtual .gyp python make g++ 
+RUN apk add --no-cache --virtual .gyp python make g++ linux-headers udev 
 #    && npm install [ your npm dependencies here ] \
 #    && apk del .gyp
 
@@ -17,8 +17,7 @@ COPY --chown=node:node package*.json ./
 
 # set the context from now on to use the node user, which is created in the base image
 USER node
-
-RUN npm install --only=prod && npm cache clean --force --loglevel=error
+RUN npm install --only=prod --unsafe-perm && npm cache clean --force --loglevel=error
 #COPY --chown=node:node node_modules ./node_modules/
 
 # Copy app source

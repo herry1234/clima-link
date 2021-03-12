@@ -15,10 +15,11 @@ storage.connect = function connect(cb) {
     password: config.database.password,
     schema: [
       {
-        measurement: 'temperature',
+        measurement: 'sensor6data',
         fields: {
           temperature: Influx.FieldType.FLOAT,
           humidity: Influx.FieldType.FLOAT,
+	  evs: Influx.FieldType.FLOAT,
         },
         tags: ['host'],
       },
@@ -34,17 +35,30 @@ storage.connect = function connect(cb) {
 };
 
 storage.save = function save(message, cb) {
-  log.info(`Storing message: ${message.temperature} ${message.timeStamp} ${message.humidity}`);
-  storage.influx.writePoints([
-    {
-      measurement: 'temperature',
+  log.info(`Storing message: ${message.timeStamp} ${message.data}`);
+  const saveData = []
+  for (const ch in message.data) {
+	    const ch_data = message.data[ch]
+	    console.log(`${ch}: ${message.data[ch][0]} ${message.data[ch][1]} ${message.data[ch][2]}`);
+            let evs_local = 0;
+	    if(message.data[ch][2] === "ON") {
+	    evs_local = 1
+	    }
+	  saveData.push({
+      		measurement: 'sensor6data',
       fields: {
-        temperature: message.temperature,
-	humidity: message.humidity,
+        temperature: ch_data[0],
+	humidity: ch_data[1],
+	evs: evs_local
+      },
+      tags: {
+        host: ch 
       },
       //timestamp: message.timeStamp,
-    },
-  ]).then(cb);
+    })
+  }
+  storage.influx.writePoints(saveData).then(() => {
+	  cb()});
 };
 
 storage.disconnect = function disconnect(cb) {

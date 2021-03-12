@@ -11,17 +11,18 @@ const receiver = {};
 
 receiver.connect = function connect(connectCallback, messageCallback) {
   const connectOptions = {
-    port: config.mqtt.port,
-    host: config.mqtt.broker,
+    //port: config.mqtt.port,
+    //host: config.mqtt.broker,
     rejectUnauthorized: false,
-    protocol: 'mqtts',
+    //protocol: 'mqtts',
     username: config.mqtt.username,
     password: config.mqtt.password,
   };
 
   log.info(`Trying to connect to the MQTT broker at ${config.mqtt.broker} on port ${config.mqtt.port}`);
+  console.log(`Trying to connect to the MQTT broker at ${config.mqtt.broker} on port ${config.mqtt.port}`);
 
-  receiver.client = mqtt.connect(connectOptions);
+  receiver.client = mqtt.connect("mqtts://"+config.mqtt.broker+":"+config.mqtt.port,connectOptions);
 
   receiver.client.on('connect', () => {
     log.info(`Connected successfully to the MQTT broker at ${config.mqtt.broker} on port ${config.mqtt.port}`);

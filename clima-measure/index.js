@@ -24,9 +24,9 @@ app.init = function init() {
 };
 
 app.measureAndSend = function measureAndSend() {
-  sensor.read((senorErr, temp, humidity) => {
+  sensor.read((senorErr, sensor6data) => {
     if (!senorErr) {
-      transmitter.send(temp, humidity, (transmitErr) => {
+      transmitter.send(sensor6data, (transmitErr) => {
         if (transmitErr) {
           log.error(`An error occurred while publishing the measurement. Err: ${transmitErr}`);
         } else {

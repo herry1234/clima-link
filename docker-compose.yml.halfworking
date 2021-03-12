@@ -13,7 +13,6 @@ services:
       - ./data:/var/lib/influx.db
     ports:
       - '8086:8086'
-    restart: "always"
   clima-storage:
     image: 'herry1234/clima-storage:0.6.0'
     container_name: 'clima-storage'
@@ -26,7 +25,6 @@ services:
       - DATABASE_NAME=climalink
       - DATABASE_USER=climalink
       - DATABASE_PASSWORD=secretuser
-    restart: "always"
   clima-broker:
     image: 'herry1234/clima-broker:0.6.0'
     container_name: 'clima-broker'
@@ -36,13 +34,18 @@ services:
       - MQTT_PASSWORD=brokerpassword
     ports:
       - '8883:8883'
-    restart: "always"
-  grafana:
-    image: grafana/grafana
-    ports:
-     - "3000:3000"
-    restart: "always"
-    user: "104"
+  clima-measure: 
+    image: 'herry1234/clima-measure:0.6.0'
+    container_name: 'clima-measure'
+    environment:
+      - MQTT_BROKER_HOST=clima-broker
+      - MQTT_BROKER_PORT=8883
+      - MQTT_USERNAME=brokerusername
+      - MQTT_PASSWORD=brokerpassword
+      - NODE_ENV=production
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
     volumes:
-      - /home/pi/workspace/clima-link/grafana-etc:/etc/grafana/
-      - /home/pi/workspace/clima-link/grafana-data:/var/lib/grafana:rw
+      - /dev:/dev
+      - /run/udev:/run/udev:ro
+    privileged: true

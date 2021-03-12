@@ -14,7 +14,7 @@ const receiver = require('./lib/receiver');
 const app = {};
 
 app.init = function init() {
-  log.info('Started climate measurement, start reading sensor data');
+  log.info('Started sensor measurement, start reading sensor data');
 
   storage.connect(() => {});
 

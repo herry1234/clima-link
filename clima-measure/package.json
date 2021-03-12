@@ -11,12 +11,14 @@
   "license": "MIT",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "ds18b20-raspi": "^0.3.4",
-    "node-dht-sensor": "*",
+    "ds18b20-raspi": "^0.3.6",
     "moment": "^2.24.0",
     "mqtt": "^3.0.0",
+    "node-dht-sensor": "*",
+    "serialport": "*",
     "pino": "^5.16.0",
-    "pino-pretty": "^3.6.0"
+    "pino-pretty": "^3.6.0",
+    "serialport": "^9.0.7"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
