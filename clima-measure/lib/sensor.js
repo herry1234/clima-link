@@ -42,7 +42,7 @@ SerialPort.list().then(ports => {
     console.log(JSON.stringify(port,undefined,4));
   });
 });
-const port = new SerialPort('/dev/ttyUSB0',  {
+const port = new SerialPort('/dev/ttyS0',  {
 	      baudRate: 115200
 	    },() => {
 console.log('Port Opened');

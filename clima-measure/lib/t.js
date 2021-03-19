@@ -22,7 +22,17 @@ function ReadSerialData(data){
 
 const tmpData = { "P0": [0,0,"OFF"], "P1": [0,0,"OFF"], "P2": [0,0,"OFF"], "P3":[0,0,"OFF"], "P4":[0,0,"OFF"],"P5":[0,0,"OFF"]}
 const SerialPort = require('serialport');
-const port = new SerialPort('/dev/ttyUSB0',  {
+SerialPort.list().then(ports => {
+  ports.forEach(function(port) {
+    console.log(port.path);
+    console.log(port.pnpId);
+    console.log(port.manufacturer);
+    console.log(JSON.stringify(port,undefined,4));
+  });
+});
+//const port = new SerialPort('/dev/ttyUSB0',  {
+const port = new SerialPort('/dev/ttyS0',  {
+//const port = new SerialPort('/dev/ttyAMA0',  {
 	      baudRate: 115200
 	    },() => {
 console.log('Port Opened');
